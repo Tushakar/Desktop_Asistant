@@ -2,7 +2,8 @@ import os
 import pyttsx3
 import datetime
 import speech_recognition as sr
-
+import wikipedia
+import webbrowser
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -40,7 +41,7 @@ def takeCommand():
         audio = r.listen(source)
     
 
-     try:
+    try:
          print("Recognizing...")
          query = r.recognize_google(audio,Language = 'en-in')
          print(f"User said: {query}\n")
@@ -57,5 +58,40 @@ def takeCommand():
 
 if __name__ == "__main__":
     wishMe()
+    if 1:
+    query = takeCommand().lower()
+
+    if 'wikipedia' in query:
+        speak('Searching Wikipedia...')
+        query = query.replace("wikipedia","")
+        results = wikipedia.summary(query,sentences=2)
+        speak("According to Wikipedia")
+        print(results)
+        speak(results)
+    elif 'open youtube' in query:
+        webbrowser.open("youtube.com")
+        
+    elif 'open google' in query:
+        webbrowser.open("google.com")
+
+    elif 'open stackoverflow' in query:
+        webbrowser.open("stackoverflow.com")
+
+    elif 'play music' in query:
+        music_dir = 'D:\\Non Critical\\songs\\Favorite Songs2'
+        songs = os.listdir(music_dir)
+        print(songs)
+        os.startfile(os.path.join(music_dir, songs[0]))
+            
+    elif 'the time' in query:
+        strTime  = datetime.datetime.now().strftime("%H:%M:%S")
+        speak(f"Sir , the time is {strTime}")
+
+    elif 'open code' in query:
+        codepath = "C:\\Program Files (x86)\\CodeBlocks\\codeblocks.exe"
+        os.startfile(codepath)
+
+
+
 
 
